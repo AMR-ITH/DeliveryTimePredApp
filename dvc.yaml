@@ -1,0 +1,17 @@
+stages:
+  data_cleaning:
+    cmd: python src/data/cleaning.py
+    deps:
+      - src/data/cleaning.py
+      - data/raw/swiggy.csv
+    outs:
+      - data/cleaned/swiggy_cleaned.csv
+
+  data_preparation:
+    cmd: python src/data/data_preparation.py
+    deps:
+      - src/data/data_preparation.py
+      - data/cleaned/swiggy_cleaned.csv
+    outs:
+      - data/interim/train.csv
+      - data/interim/test.csv
