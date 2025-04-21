@@ -1,4 +1,5 @@
 stages:
+
   data_cleaning:
     cmd: python src/data/cleaning.py
     deps:
@@ -15,3 +16,37 @@ stages:
     outs:
       - data/interim/train.csv
       - data/interim/test.csv
+  
+  data_preprocessing:
+    cmd: python src/features/data_preprocessing.py
+    deps:
+      - src/features/data_preprocessing.py
+      - data/interim/train.csv
+      - data/interim/test.csv
+    outs:
+      - data/processed/train_trans.csv
+      - data/processed/test_trans.csv
+  
+  data_train:
+    cmd: python src/models/train.py
+    deps:
+      - src/models/train.py
+      - data/processed/train_trans.csv
+      - params.yaml
+    outs:
+      - models/model.joblib
+      - models/stacking_model.joblib
+      - models/power_transformer.joblib
+
+  data_evaluate:
+    cmd: python src/models/evaluation.py
+    deps:
+      - src/models/evaluation.py
+      - data/processed/train_trans.csv
+      - data/processed/test_trans.csv
+      - models/model.joblib
+      - models/stacking_model.joblib
+      - models/power_transformer.joblib
+      - models/preprocessor.joblib
+    outs:
+      - run_information.json

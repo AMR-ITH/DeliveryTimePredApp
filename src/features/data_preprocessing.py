@@ -18,7 +18,7 @@ if src_dir not in sys.path:
 from utils.logging_config import setup_logging
 
 # Set up logging
-logger = setup_logging("data_preparation")
+logger = setup_logging("data_preprocessing")
 
 # set the transformer outputs to pandas
 set_config(transform_output='pandas')
