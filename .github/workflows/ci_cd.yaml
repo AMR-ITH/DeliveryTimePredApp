@@ -15,8 +15,7 @@ jobs:
           python-version: '3.11'
           cache: 'pip' 
 
-
-      - name: Install Packages
+      - name: Install dependencies manually
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
