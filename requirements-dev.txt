@@ -6,3 +6,9 @@ dagshub
 dvc
 lightgbm
 joblib
+fastapi
+pydantic
+uvicorn
+pytest
+dvc[s3] 
+awscli

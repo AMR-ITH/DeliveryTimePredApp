@@ -86,6 +86,8 @@ if __name__ == "__main__":
     # load the model
     model = load_model(model_path)
 
+
+
     # get the train and test predictions
     y_train_pred = model.predict(X_train)
     y_test_pred = model.predict(X_test)
@@ -121,7 +123,7 @@ if __name__ == "__main__":
         mlflow.log_metric("train_r2", train_r2)
         mlflow.log_metric("test_r2", test_r2)
         mlflow.log_metric("cv_score", mean_cv_error)
-        mlflow.log_metrics({f"CV_{num}": score for num, score in enumerate(cv_scores)})
+        mlflow.log_metrics({f"CV_{num}": -score for num, score in enumerate(cv_scores)})
 
         # mlflow dataset input datatype
         train_data_input = mlflow.data.from_pandas(train_df, targets=target_col)

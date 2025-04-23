@@ -47,6 +47,8 @@ coverage.xml
 *.mo
 *.pot
 
+
+
 # Django stuff:
 *.log
 
@@ -86,3 +88,7 @@ target/
 # Mypy cache
 .mypy_cache/
 /run_information.json
+
+# Keys folder
+keys/
+
