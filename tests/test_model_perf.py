@@ -21,12 +21,6 @@ dagshub.init(repo_owner='AMR-ITH', repo_name='swiggy-delivery-time-estimator', m
 mlflow.set_tracking_uri("https://dagshub.com/AMR-ITH/swiggy-delivery-time-estimator.mlflow")
 
 
-# pathlib is a module in Python that provides an object-oriented interface 
-# for working with file system paths.
-current = Path.cwd()
-parent = current.parent
-print(f"Current directory: {current}")
-print(f"Parent directory: {parent}")
 
 
 
@@ -38,14 +32,18 @@ def load_model_information(file_path):
 def load_trasformer(transformer_path):
     transformer = joblib.load(transformer_path)
     return transformer
-
+# set the root path
+root_path = Path(__file__).parent.parent
 
 # load the preprocessor
-preprocessor = load_trasformer(parent / "models" / "preprocessor.joblib")
+preprocessor_path = root_path / "models" / "preprocessor.joblib"
+
+# load the preprocessor
+preprocessor = load_trasformer( preprocessor_path)
 
 
 # Try loading the model
-model_name = load_model_information(parent / "run_information.json")["model_name"]
+model_name = load_model_information( "run_information.json")["model_name"]
 alias_name = "staging_latest"
 # Construct the model URI using the alias
 model_uri = f"models:/{model_name}@{alias_name}"
@@ -53,7 +51,7 @@ model = mlflow.pyfunc.load_model(model_uri)
 
 
 # test data path
-test_data_path = parent / "data" / "interim" / "test.csv"
+test_data_path = root_path / "data" / "interim" / "test.csv"
 
 
 
