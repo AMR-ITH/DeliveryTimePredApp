@@ -71,62 +71,72 @@ def time_of_day(ser: pd.Series):
 
 def data_cleaning(data: pd.DataFrame):
     try:
-        logger.info("Starting data cleaning process")
-        minors_data_index = data[data["age"].astype(float) < 18].index.tolist()
-        six_star_index = data[data["ratings"].astype(float) > 5].index.tolist()
-
-        logger.info(f"Found {len(minors_data_index)} records with minors (age < 18)")
-        logger.info(f"Found {len(six_star_index)} records with invalid ratings (> 5)")
+        minors_data = data.loc[data['age'].astype('float') < 18]
+        minor_index = minors_data.index.tolist()
+        six_star_data = data.loc[data['ratings'] == "6"]
+        six_star_index = six_star_data.index.tolist()
 
         cleaned_data = (
-            data
-            .drop(columns="id")
-            .drop(index=minors_data_index)  # Minor riders in data dropped
-            .drop(index=six_star_index)  # six star rated drivers dropped
-            .replace("NaN ", np.nan)
-            .assign(
-                # extract city name out of rider id
-                city_name=lambda x: x['rider_id'].str.split("RES").str.get(0),
-                # convert age to float
-                age=lambda x: x['age'].astype(float),
-                # convert ratings to float
-                ratings=lambda x: x['ratings'].astype(float),
-                # abs values of lat long columns
-                restaurant_latitude=lambda x: x['restaurant_latitude'].abs(),
-                restaurant_longitude=lambda x: x['restaurant_longitude'].abs(),
-                delivery_latitude=lambda x: x['delivery_latitude'].abs(),
-                delivery_longitude=lambda x: x['delivery_longitude'].abs(),
-                # order date to datetime and feature extraction
-                order_date=lambda x: pd.to_datetime(x['order_date'], dayfirst=True),
-                order_day=lambda x: x['order_date'].dt.day,
-                order_month=lambda x: x['order_date'].dt.month,
-                order_day_of_week=lambda x: x['order_date'].dt.day_name().str.lower(),
-                is_weekend=lambda x: x['order_date'].dt.day_name().str.lower().isin(["saturday", "sunday"]).astype(int),
-                # order time to datetime and feature extraction
-                order_time=lambda x: pd.to_datetime(x['order_time'], format="mixed"),
-                order_picked_time=lambda x: pd.to_datetime(x['order_picked_time'], format="mixed"),
-                pickup_time_minutes=lambda x: (x['order_picked_time'] - x['order_time']).dt.seconds / 60,
-                # order time hour and time of day
-                order_time_hour=lambda x: x['order_time'].dt.hour,
-                order_time_of_day=lambda x: x['order_time_hour'].pipe(time_of_day),
-                # weather conditions
-                weather=lambda x: (
-                    x['weather']
-                    .str.replace("conditions ", "")
-                    .str.lower()
-                    .replace("nan", np.nan)),
-                traffic=lambda x: x["traffic"].str.rstrip().str.lower(),
-                type_of_order=lambda x: x['type_of_order'].str.rstrip().str.lower(),
-                type_of_vehicle=lambda x: x['type_of_vehicle'].str.rstrip().str.lower(),
-                festival=lambda x: x['festival'].str.rstrip().str.lower(),
-                city_type=lambda x: x['city_type'].str.rstrip().str.lower(),
-                # multiple deliveries column
-                multiple_deliveries=lambda x: x['multiple_deliveries'].astype(float),
-                # target column modifications
-                time_taken=lambda x: (x['time_taken']
-                                      .str.replace("(min) ", "")
-                                      .astype(int)))
-            .drop(columns=["order_time", "order_picked_time"])
+           data
+        .drop(columns="id")
+        .drop(index=minor_index)                                                # Minor riders in data dropped
+        .drop(index=six_star_index)                                             # six star rated drivers dropped
+        .replace("NaN ",np.nan)                                                 # missing values in the data
+        .assign(
+            # city column out of rider id
+            city_name = lambda x: x['rider_id'].str.split("RES").str.get(0),
+            # convert age to float
+            age = lambda x: x['age'].astype(float),
+            # convert ratings to float
+            ratings = lambda x: x['ratings'].astype(float),
+            # absolute values for location based columns
+            restaurant_latitude = lambda x: x['restaurant_latitude'].abs(),
+            restaurant_longitude = lambda x: x['restaurant_longitude'].abs(),
+            delivery_latitude = lambda x: x['delivery_latitude'].abs(),
+            delivery_longitude = lambda x: x['delivery_longitude'].abs(),
+            # order date to datetime and feature extraction
+            order_date = lambda x: pd.to_datetime(x['order_date'],
+                                                  dayfirst=True, errors='coerce'),
+            order_day = lambda x: x['order_date'].dt.day,
+            order_month = lambda x: x['order_date'].dt.month,
+            order_day_of_week = lambda x: x['order_date'].dt.day_name().str.lower(),
+            is_weekend = lambda x: (x['order_date']
+                                    .dt.day_name()
+                                    .isin(["Saturday","Sunday"])
+                                    .astype(int)),
+            # time based columns
+            order_time = lambda x: pd.to_datetime(x['order_time'],
+                                                   errors='coerce'),
+            order_picked_time = lambda x: pd.to_datetime(x['order_picked_time'],
+                                                         format='mixed'),
+            # time taken to pick order
+            pickup_time_minutes = lambda x: (
+                                            (x['order_picked_time'] - x['order_time'])
+                                            .dt.seconds / 60
+                                            ),
+            # hour in which order was placed
+            order_time_hour = lambda x: x['order_time'].dt.hour,
+            # time of the day when order was placed
+            order_time_of_day = lambda x: (
+                                x['order_time_hour'].pipe(time_of_day)),
+            # categorical columns
+            weather = lambda x: (
+                                x['weather']
+                                .str.replace("conditions ","")
+                                .str.lower()
+                                .replace("nan",np.nan)),
+            traffic = lambda x: x["traffic"].str.rstrip().str.lower(),
+            type_of_order = lambda x: x['type_of_order'].str.rstrip().str.lower(),
+            type_of_vehicle = lambda x: x['type_of_vehicle'].str.rstrip().str.lower(),
+            festival = lambda x: x['festival'].str.rstrip().str.lower(),
+            city_type = lambda x: x['city_type'].str.rstrip().str.lower(),
+            # multiple deliveries column
+            multiple_deliveries = lambda x: x['multiple_deliveries'].astype(float))
+            # target column modifications
+            # time_taken = lambda x: (x['time_taken']
+            #                         .str.replace("(min) ","")
+            #                         .astype(int)))
+        .drop(columns=["order_time","order_picked_time"])
         )
 
         logger.info(f"Data cleaning completed. Shape after cleaning: {cleaned_data.shape}")

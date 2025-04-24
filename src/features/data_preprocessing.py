@@ -135,9 +135,14 @@ if __name__ == "__main__":
             force_int_remainder_cols=False, verbose_feature_names_out=False
         )
 
+
+
+
         # split the train and test data 
         X_train, y_train = train_df.drop(columns=[target_col]), train_df[target_col]
         X_test, y_test = test_df.drop(columns=[target_col]), test_df[target_col]
+
+
 
         # fit the preprocessor on X_train
         train_preprocessor(preprocessor=preprocessor, data=X_train)
@@ -146,7 +151,9 @@ if __name__ == "__main__":
         X_train_trans = perform_transforamtions(preprocessor=preprocessor, data=X_train)
         X_test_trans = perform_transforamtions(preprocessor=preprocessor, data=X_test)
 
-        # join X and y
+        # join X and y 
+        y_train = y_train.str.replace(r'\(min\)\s*', '', regex=True).astype(float)
+        y_test = y_test.str.replace(r'\(min\)\s*', '', regex=True).astype(float) 
         df_train_trans = pd.concat([X_train_trans, y_train], axis=1)
         df_test_trans = pd.concat([X_test_trans, y_test], axis=1)
 
