@@ -12,6 +12,7 @@ dagshub.init(repo_owner='AMR-ITH', repo_name='swiggy-delivery-time-estimator', m
 mlflow.set_tracking_uri("https://dagshub.com/AMR-ITH/swiggy-delivery-time-estimator.mlflow")
 
 
+
 def load_model_information(file_path):
     with open(file_path) as f:
         run_info = json.load(f)
