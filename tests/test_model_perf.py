@@ -55,6 +55,7 @@ test_data_path = root_path / "data" / "interim" / "test.csv"
 
 
 
+
 @pytest.mark.parametrize(argnames="model, test_data_path, threshold_error",
                         argvalues=[(model, test_data_path, 5)])
 def test_model_performance(model,test_data_path,threshold_error):
@@ -66,7 +67,7 @@ def test_model_performance(model,test_data_path,threshold_error):
     
     # make X and y
     X = df.drop(columns=["time_taken"])
-    y = df['time_taken']
+    y = df['time_taken'].str.replace(r'\(min\)\s*', '', regex=True).astype(float)
 
     # transform the data
     X_trans = preprocessor.transform(X)
