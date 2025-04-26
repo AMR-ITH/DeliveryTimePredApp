@@ -21,6 +21,7 @@ if [ "$(docker ps -aq -f name=delivery_time_pred)" ]; then
     docker rm delivery_time_pred
 fi
 
+
 echo "Starting new container..."
 docker run -d -p 80:8000 --name delivery_time_pred -e DAGSHUB_USER_TOKEN=a09b0118c91553ef5b4fb2c26aa9a4ef53ca51c1 038950678452.dkr.ecr.ap-south-1.amazonaws.com/swiggy-delivery-time-estimator:latest
 
