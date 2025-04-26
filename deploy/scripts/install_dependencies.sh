@@ -42,7 +42,7 @@ if [ ! -d "/opt/codedeploy-agent" ] || [ ! -f "/opt/codedeploy-agent/bin/codedep
   # Install dependencies
   sudo apt-get install -y ruby-full wget
   
-  # Get the region from the instance metadata
+  # Get the region from the instance 
   REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F" '{print $4}')
   if [ -z "$REGION" ]; then
     # Default to us-east-1 if we can't determine the region
