@@ -27,7 +27,7 @@ sudo usermod -aG docker ubuntu
 # Clean up the AWS CLI installation files
 rm -rf /home/ubuntu/awscliv2.zip /home/ubuntu/aws
 
-# ===== CODEDEPLOY AGENT FIX SECTION =====
+# ===== CODEDEPLOY AGENT FIX SECTION ==
 echo "===== FIXING CODEDEPLOY AGENT ISSUES ====="
 
 # 1. Check if CodeDeploy agent is installed and reinstall if needed
