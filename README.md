@@ -32,60 +32,35 @@ This project develops a machine learning pipeline to predict delivery times for 
 ### Image 2: CI/CD and Deployment Process
 ![image](https://github.com/user-attachments/assets/e3e3377e-6948-473a-8b0a-0975c2ff679b)
 
-swiggy_order_time_prediction
-==============================
 
-A short description of the project.
+## 🌐 Try It Out
+You can interact with the recommendation system at the following link:  
+(http:[http://13.201.71.93/docs])
 
-Project Organization
-------------
+## 📋 Example Input Data
+You can download an example input dataset in CSV format from the following link:  
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    {
+      "ID": "0x4607",
+      "Delivery_person_ID": "INDORES13DEL02",
+      "Delivery_person_Age": 37.0,
+      "Delivery_person_Ratings": 4.9,
+      "Restaurant_latitude": 22.745049,
+      "Restaurant_longitude": 75.892471,
+      "Delivery_location_latitude": 22.765049,
+      "Delivery_location_longitude": 75.912471,
+      "Order_Date": "19-03-2022",
+      "Time_Orderd": "11:30:00",
+      "Time_Order_picked": "11:45:00",
+      "Weatherconditions": "sunny",
+      "Road_traffic_density": "High",
+      "Vehicle_condition": 2,
+      "Type_of_order": "Snack",
+      "Type_of_vehicle": "motorcycle",
+      "multiple_deliveries": 0,
+      "Festival": "no",
+      "City": "Urban"
+    }
 
-
---------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
