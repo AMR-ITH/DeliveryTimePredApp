@@ -1,7 +1,5 @@
 ## 🍕 Delivery Time Prediction for Food Chain App
 
-# ML Delivery Time Prediction System
-
 ## 📋 Project Overview
 
 This project develops an end-to-end machine learning pipeline to predict delivery times for a food delivery app. 
