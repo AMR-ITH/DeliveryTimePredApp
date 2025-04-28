@@ -1,3 +1,37 @@
+## 🍕 Delivery Time Prediction for Food Chain App
+
+### 📋 Project Overview
+This project develops a machine learning pipeline to predict delivery times for a food chain app. The workflow includes data cleaning, exploratory data analysis (EDA), preprocessing, base model building, hyperparameter tuning with Optuna, stacking, model tracking with MLflow, data versioning with DVC, and deployment via a CI/CD pipeline.
+
+- **Data Pipeline**: Cleaning, EDA, preprocessing, training, evaluation, and model registration.
+- **Models**: Base models (KNN, LR) optimized with Optuna, stacked with LR as the final estimator.
+- **Tracking**: Experiments logged in MLflow, with the final model saved in staging.
+- **Data Versioning**: DVC pipeline with data stored in an S3-backed DVC repository.
+- **Deployment**: CI/CD pipeline using AWS CodeDeploy and ECR, with FastAPI for predictions.
+
+### 🛠️ Tech Stack
+#### Data & Pipeline
+- **DVC (Data Version Control)**: Versioning datasets and managing the data pipeline.
+- **AWS S3**: Storage for datasets and pipeline artifacts.
+
+#### CI/CD
+- **GitHub Actions**: Automates CI/CD pipeline.
+- **Docker**: Containerizes the application.
+- **AWS ECR (Elastic Container Registry)**: Stores Docker images.
+- **AWS CodeDeploy**: Deploys the application.
+
+#### Deployment
+- **AWS EC2/ECS**: Hosts the deployed application.
+- **Auto Scaling Groups (Rolling Update)**: Ensures scalability and zero-downtime updates.
+- **FastAPI**: Serves model predictions via a REST API.
+
+## 📊 System Overview
+### Image 1: Machine Learning Workflow with Version Control
+![image](https://github.com/user-attachments/assets/e3981564-03e9-4e5b-be69-6ae9dc838b1e)
+
+### Image 2: CI/CD and Deployment Process
+![image](https://github.com/user-attachments/assets/e3e3377e-6948-473a-8b0a-0975c2ff679b)
+
 swiggy_order_time_prediction
 ==============================
 
